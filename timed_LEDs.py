@@ -1,12 +1,12 @@
-# Set off LEd strip one by one in a certain amount of time
-
-import time
+# Set off LED strip one by one in a certain amount of time
 
 from neopixel import *
 
 import argparse
+import math
 import signal
-import sys
+#import sys
+import time
 
 
 def opt_parse():
@@ -33,6 +33,27 @@ LED_INVERT      = False
 LED_CHANNEL     = 0
 LED_STRIP       = ws.WS2812_STRIP       # Specific LED strip we have
 
+POOL_X_VALUES = [0, 16.5, 21, 75]
+POOL_Y_VALUES = [4, 5, 6.5, 8]
+
+def pool_slope_calculations(time):
+    horizontal_length = []
+    diagonal_length = []
+    total_horizontal_length = 0
+    total_diagonal_length = 0
+    for i in range(len(POOL_X_VALUES)-1):
+        x_diff = POOL_X_VALUES[i+1] - POOL_X_VALUES[i]
+        y_diff = POOL_Y_VALUES[i+1] - POOL_Y_VALUES[i]
+        horizontal_length.append(x_diff)
+        diagonal_length.append(math.sqrt(x_diff ** 2 + y_diff ** 2))
+        total_horizontal_length += x_diff
+        total_diagonal_length += math.sqrt(x_diff ** 2 + y_diff ** 2)
+    led_in_section = []
+    time_in_section = []
+    for i in range(len(horizontal_length)):
+        led_in_section.append(LED_COUNT * diagonal_length[i]/total_diagonal_length)
+        time_in_section.append(time * horizontal_length[i]/total_horizontal_length)
+
 '''
 odd laps first = 0 last = num pix = num pixels
 even laps first = num pixels last =0
@@ -46,8 +67,8 @@ def follow_odd(strip, pace):
         strip.show()
         time.sleep(pace/60.0)
         strip.setPixelColor(i, Color(0,0,0))
-        strip.setPixelColor(i+1, Color(0,0,0))
-        strip.setPixelColor(i+2, Color(0,0,0))
+        #strip.setPixelColor(i+1, Color(0,0,0))
+        #strip.setPixelColor(i+2, Color(0,0,0))
         strip.show()
 def follow_even(strip, pace):
 
@@ -58,8 +79,8 @@ def follow_even(strip, pace):
         strip.show()
         time.sleep(pace/60.0)
         strip.setPixelColor(i, Color(0,0,0))
-        strip.setPixelColor(i-1, Color(0,0,0))
-        strip.setPixelColor(i-2, Color(0,0,0))
+        #strip.setPixelColor(i-1, Color(0,0,0))
+        #strip.setPixelColor(i-2, Color(0,0,0))
         strip.show()
         
         
