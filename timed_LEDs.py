@@ -17,14 +17,15 @@ def opt_parse():
         signal.signal(signal.SIGINT, signal_handler)
 
 # Time Constant
-PACE1 = 5 
-PACE2 = 20
-PACE3 = 5 
+PACE1 = 15
+PACE2 = 15
+PACE3 = 15
 PACE4 = 10
 LAPS = 4
+SCALER = 4.5
 
 # LED Strip Config - Object params
-LED_COUNT       = 60             
+LED_COUNT       = 750             
 LED_PIN         = 18                    # GPIO18 actually pin 12!!!!!
 LED_FREQ        = 800000
 LED_DMA         = 5
@@ -38,28 +39,28 @@ odd laps first = 0 last = num pix = num pixels
 even laps first = num pixels last =0
 '''
 def follow_odd(strip, pace):
+    pace = pace - SCALER
     strip.setPixelColor(0, Color(0,255,0))
-    strip.setPixelColor(1, Color(0,255,0))
-    for i in range(strip.numPixels()-2):
+    # strip.setPixelColor(1, Color(0,255,0))
+    for i in range(0,strip.numPixels()-2,2):
         strip.setPixelColor(i+2, Color(0,255,0))
         strip.show()
-        time.sleep(float(pace)/LED_COUNT)
+        time.sleep(2*(float(pace)/LED_COUNT))
         strip.setPixelColor(i, Color(0,0,0))
         '''strip.setPixelColor(i+1, Color(0,0,0))
         strip.setPixelColor(i+2, Color(0,0,0))
         strip.show()'''
 def follow_even(strip, pace):
-
-    for i in range(strip.numPixels(), 2, -1):
-        strip.setPixelColor(i, Color(0,255,0))
-        strip.setPixelColor(i-1, Color(0,255,0))
+    pace = pace - SCALER
+    strip.setPixelColor(LED_COUNT-2, Color(0,255,0))
+    for i in range(strip.numPixels(), 0, -2):
         strip.setPixelColor(i-2, Color(0,255,0))
         strip.show()
-        time.sleep(float(pace)/LED_COUNT)
+        time.sleep(2*(float(pace)/LED_COUNT))
         strip.setPixelColor(i, Color(0,0,0))
         '''strip.setPixelColor(i-1, Color(0,0,0))
-        strip.setPixelColor(i-2, Color(0,0,0))'''
-        strip.show()
+        strip.setPixelColor(i-2, Color(0,0,0))
+        strip.show()'''
         
         
 
@@ -75,12 +76,19 @@ if __name__ == '__main__':
     
 
     print('Start')
+    a = time.time()
 
 
     follow_odd(strip,PACE1)
-    '''follow_even(strip, PACE2)
-    follow_odd(strip, PACE3)
-    follow_even(strip,PACE4)'''
-
+    b = time.time()
+    print(b-a)
+    print(PACE1)
+    follow_even(strip, PACE2)
+    c= time.time()
+    print(c-b)
+    print(PACE2)
+   # follow_odd(strip, PACE3)
+   # follow_even(strip,PACE4)
+    
 
 
