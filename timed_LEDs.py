@@ -17,7 +17,7 @@ def opt_parse():
         signal.signal(signal.SIGINT, signal_handler)
 
 # Time Constant
-PACE1 = 15
+PACE1 = 20
 PACE2 = 15
 PACE3 = 15
 PACE4 = 10
@@ -25,7 +25,7 @@ LAPS = 4
 SCALER = 4.5
 
 # LED Strip Config - Object params
-LED_COUNT       = 750
+LED_COUNT       = 742
 LED_PIN         = 18                    # GPIO18 is actually pin 12
 LED_FREQ        = 800000
 LED_DMA         = 5
