@@ -17,12 +17,12 @@ def opt_parse():
         signal.signal(signal.SIGINT, signal_handler)
 
 # Time Constant
+SCALER = 4.5
 PACE1 = 20 - SCALER
 PACE2 = 15 - SCALER
 PACE3 = 15 - SCALER
 PACE4 = 10 - SCALER
 LAPS = 4
-SCALER = 4.5
 
 # LED Strip Config - Object params
 LED_COUNT       = 742
@@ -72,7 +72,7 @@ last = numPixels
 '''
 def follow_odd(strip, pace, ledCount):
     strip.setPixelColor(0, Color(0,255,0))
-    for i in range(0, strip.numPixels()-2, 2):
+    for i in range(0, int(ledCount)-2, 2):
         strip.setPixelColor(i+2, Color(0,255,0))
         strip.show()
         time.sleep(2*(float(pace)/ledCount))
@@ -84,8 +84,8 @@ first = numPixels
 last = 0
 '''
 def follow_even(strip, pace, ledCount):
-    strip.setPixelColor(strip.numPixels()-2, Color(0,255,0))
-    for i in range(strip.numPixels(), 0, -2):
+    #strip.setPixelColor(strip.numPixels()-2, Color(0,255,0))
+    for i in range(int(ledCount), 0, -2):
         strip.setPixelColor(i-2, Color(0,255,0))
         strip.show()
         time.sleep(2*(float(pace)/ledCount))
@@ -101,7 +101,7 @@ if __name__ == '__main__':
     strip.begin()
     
     start = time.time()
-    pool_slope_calculations(strip, 2, [15, 20]
+    pool_slope_calculations(strip, 2, [15, 20])
     end = time.time()
     print(end-start)
     print(15+20)
