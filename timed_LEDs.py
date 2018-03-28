@@ -68,7 +68,7 @@ def led_timing(strip, numLaps, lapTimes, debug = False):
 
             # For even laps, turn on every other LED in ascending order
             if n % 2 == 0:
-                for j in range(0, int(led_in_section[i]), 2):
+                for j in range(-2, int(led_in_section[i]), 2):
                     strip.setPixelColor(total_led_num+2, Color(0,255,0))
                     strip.show()
                     time.sleep(2*(float(time_in_section)/led_in_section[i]))
@@ -77,7 +77,7 @@ def led_timing(strip, numLaps, lapTimes, debug = False):
             
             # For odd laps, turn on every other LED in descending order
             else:
-                for j in range(int(led_in_section[i]), 0, -2):
+                for j in range(int(led_in_section[i]), -2, -2):
                     strip.setPixelColor(total_led_num-2, Color(0,255,0))
                     strip.show()
                     time.sleep(2*(float(time_in_section)/led_in_section[i]))
