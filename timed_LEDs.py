@@ -38,10 +38,6 @@ POOL_X_VALUES = [0, 16.5, 21, 75]
 POOL_Y_VALUES = [4, 5, 6.5, 8]
 
 def pool_slope_calculations(strip, numLaps, lapTimes):
-
-    for i in range(numLaps):
-        lapTimes[i] -= SCALER
-
     horizontal_length = []
     diagonal_length = []
     total_horizontal_length = 0
@@ -61,9 +57,9 @@ def pool_slope_calculations(strip, numLaps, lapTimes):
         start = time.time()
         total_led_num = 0    
         for i in range(len(horizontal_length)):
-            time_in_section = lapTimes[n] * horizontal_length[i]/total_horizontal_length
+            time_in_section = (lapTimes[n] - SCALER) * horizontal_length[i]/total_horizontal_length
 
-            for j in range(int(led_in_section[i])):
+            for j in range(0, int(led_in_section[i]), 2):
                 strip.setPixelColor(total_led_num+2, Color(0,255,0))
                 strip.show()
                 time.sleep(2*(float(time_in_section)/led_in_section[i]))
