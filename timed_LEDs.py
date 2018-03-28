@@ -59,21 +59,24 @@ def pool_slope_calculations(strip, numLaps, lapTimes):
         for i in range(len(horizontal_length)):
             time_in_section = (lapTimes[n] - SCALER) * horizontal_length[i]/total_horizontal_length
 
-            for j in range(0, int(led_in_section[i]), 2):
-                strip.setPixelColor(total_led_num+2, Color(0,255,0))
-                strip.show()
-                time.sleep(2*(float(time_in_section)/led_in_section[i]))
-                strip.setPixelColor(total_led_num, Color(0,0,0))
-                total_led_num += 1
+            if n % 2 == 0:
+                for j in range(0, int(led_in_section[i]), 2):
+                    strip.setPixelColor(total_led_num+2, Color(0,255,0))
+                    strip.show()
+                    time.sleep(2*(float(time_in_section)/led_in_section[i]))
+                    strip.setPixelColor(total_led_num, Color(0,0,0))
+                    total_led_num += 2
+            else:
+                for j in range(int(led_in_section[i]), 0, -2):
+                    strip.setPixelColor(total_led_num-2, Color(0,255,0))
+                    strip.show()
+                    time.sleep(2*(float(time_in_section)/ledCount))
+                    strip.setPixelColor(total_led_num, Color(0,0,0))
+                    total_led_num += 2
+
         end = time.time()
         print(end-start)
         print(lapTimes[n])
-
-            
-            #if n % 2 == 0:
-            #    follow_odd(strip, time_in_section, led_in_section[i])
-            #else:
-            #    follow_even(strip, time_in_section, led_in_section[i])
 
 '''
 Odd laps 
