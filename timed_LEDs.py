@@ -21,6 +21,19 @@ LED_STRIP       = ws.WS2812_STRIP       # Specific LED strip we have
 POOL_X_VALUES = [0, 16.5, 21, 75]
 POOL_Y_VALUES = [4, 5, 6.5, 8]
 
+def start_LEDs(numLaps, lapTimeSec, lapTimeMs):
+    print("start_LEDs")
+    # Create Object
+    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL, LED_STRIP)
+    strip.begin()
+    
+    timing_array = []
+    
+    for _ in range(numLaps):
+        timing_array << lapTimeSec
+    
+    led_timing(strip, numLaps, timing_array)
+
 '''
 Performs LED timing algorithm
 
@@ -93,6 +106,7 @@ def led_timing(strip, numLaps, lapTimes, debug = False):
 # Main program 
 if __name__ == '__main__':
 
+    print("main")
     # Create Object
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL, LED_STRIP)
     strip.begin()
