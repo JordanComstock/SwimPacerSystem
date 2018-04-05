@@ -8,7 +8,7 @@ import time
 SCALER = 4.5
 
 # LED Strip Config - Object params
-LED_COUNT       = 742
+LED_COUNT       = 741
 LED_PIN         = 18                    # GPIO18 is actually pin 12
 LED_FREQ        = 800000
 LED_DMA         = 5
@@ -29,10 +29,10 @@ def start_LEDs(numLaps, lapTimeSec, lapTimeMs):
     
     timing_array = []
     
-    for _ in range(numLaps):
-        timing_array << lapTimeSec
+    for _ in range(int(numLaps)):
+        timing_array.append(int(lapTimeSec))
     
-    led_timing(strip, numLaps, timing_array)
+    led_timing(strip, int(numLaps), timing_array, True)
 
 '''
 Performs LED timing algorithm
